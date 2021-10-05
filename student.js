@@ -5,6 +5,7 @@ var sql = require('mssql');
 
 function create(req, res) {
     const student = req.body;
+    console.log(student)
     sql.connect(ourConfig, function () {
         var request = new sql.Request();
         request.input("RefNumber", sql.VarChar(10), student.refNumber);
@@ -12,11 +13,13 @@ function create(req, res) {
         request.input("LastName", sql.VarChar(50), student.lastName);
         request.input("Gender", sql.Char(1), student.gender);
         request.input("Year", sql.VarChar(10), student.year);
-        request.input("Subjects", sql.VarChar(50), student.subject.join(","));
+        request.input("Phone", sql.VarChar(50), student.phone);
+        request.input("Subjects", sql.VarChar(50), student.subject);
         request
             .execute("student_insert")
             .then(function (data) {
-                res.status(200).send(data);
+                console.log(res.err)
+                res.status(200).send(data.recordset);
             })
             .catch(function (err) {
                 res.send(err);

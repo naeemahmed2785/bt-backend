@@ -1,23 +1,11 @@
 var ourConfig = require("./config");
 var sql = require('mssql');
 
-// module.exports = {
-
-
-//     test1: function () {
-
-//     }, test2: function () {
-
-//     },
-//     test3: function () {
-
-//     }
-// }
 
 module.exports = {
     executeQuery: (res, myquery) => {
         sql.connect(ourConfig, function (err) {
-            if (err) console.log(err);
+            if (err) console.log("got error while connecting::", err);
             // create Request object
 
             var request = new sql.Request();
